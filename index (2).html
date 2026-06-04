@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airbnb - Book Unique Stays</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50">
+    
+    <!-- HEADER -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="text-4xl text-red-500">
+                    <i class="fab fa-airbnb"></i>
+                </div>
+                <span class="text-2xl font-bold">airbnb</span>
+            </div>
+
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#" class="hover:text-gray-700">Stays</a>
+                <a href="#" class="hover:text-gray-700">Experiences</a>
+                <a href="#" class="hover:text-gray-700">Online Experiences</a>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <button onclick="toggleLogin()" class="px-5 py-2 text-sm font-medium hover:bg-gray-100 rounded-full">Become a Host</button>
+                <button onclick="toggleLogin()" class="flex items-center gap-2 px-5 py-2 text-sm font-medium hover:bg-gray-100 rounded-full">
+                    <i class="fas fa-globe"></i>
+                </button>
+                <button onclick="toggleLogin()" class="flex items-center gap-3 border border-gray-300 px-4 py-2 rounded-full hover:shadow-md">
+                    <i class="fas fa-bars"></i>
+                    <i class="fas fa-user-circle text-2xl text-gray-500"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SEARCH -->
+    <div class="bg-white border-b">
+        <div class="max-w-5xl mx-auto px-6 py-8">
+            <div class="bg-white border border-gray-200 rounded-3xl shadow-xl p-2">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
+                    <div class="col-span-2 p-4 hover:bg-gray-50 rounded-3xl cursor-pointer">
+                        <label class="block text-xs font-semibold text-gray-600">Where</label>
+                        <input id="location" type="text" placeholder="Search destinations" 
+                               class="w-full outline-none text-lg placeholder-gray-400">
+                    </div>
+                    <div class="p-4 hover:bg-gray-50 rounded-3xl cursor-pointer">
+                        <label class="block text-xs font-semibold text-gray-600">Check in</label>
+                        <input id="checkin" type="date" class="w-full outline-none text-lg">
+                    </div>
+                    <div class="p-4 hover:bg-gray-50 rounded-3xl cursor-pointer">
+                        <label class="block text-xs font-semibold text-gray-600">Check out</label>
+                        <input id="checkout" type="date" class="w-full outline-none text-lg">
+                    </div>
+                </div>
+                <button onclick="searchProperties()" 
+                        class="mt-2 w-full md:w-auto bg-red-500 hover:bg-red-600 text-white font-semibold px-10 py-4 rounded-3xl flex items-center gap-3 mx-auto">
+                    <i class="fas fa-search"></i>
+                    Search
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div class="max-w-7xl mx-auto px-6 py-6 border-b overflow-x-auto">
+        <div class="flex gap-8 text-sm whitespace-nowrap">
+            <div class="flex flex-col items-center cursor-pointer text-red-500">
+                <i class="fas fa-home text-2xl"></i>
+                <span class="mt-1 text-xs font-medium">Homes</span>
+            </div>
+            <div class="flex flex-col items-center cursor-pointer text-gray-500 hover:text-gray-700">
+                <i class="fas fa-mountain text-2xl"></i>
+                <span class="mt-1 text-xs font-medium">Cabins</span>
+            </div>
+            <div class="flex flex-col items-center cursor-pointer text-gray-500 hover:text-gray-700">
+                <i class="fas fa-umbrella-beach text-2xl"></i>
+                <span class="mt-1 text-xs font-medium">Beachfront</span>
+            </div>
+            <div class="flex flex-col items-center cursor-pointer text-gray-500 hover:text-gray-700">
+                <i class="fas fa-tree text-2xl"></i>
+                <span class="mt-1 text-xs font-medium">Lakefront</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROPERTY LISTINGS -->
+    <div class="max-w-7xl mx-auto px-6 py-10">
+        <h2 class="text-3xl font-semibold mb-8">Live anywhere</h2>
+        
+        <div id="property-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <!-- Populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- BOOKING MODAL -->
+    <div id="booking-modal" class="hidden fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full overflow-hidden">
+            <div class="p-8">
+                <h3 class="text-2xl font-semibold mb-6" id="modal-title"></h3>
+                <div id="modal-image" class="rounded-2xl overflow-hidden mb-6 h-64"></div>
+                
+                <div class="space-y-4">
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Price per night</span>
+                        <span class="font-bold text-xl" id="modal-price"></span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Check-in</span>
+                        <span id="modal-checkin"></span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Check-out</span>
+                        <span id="modal-checkout"></span>
+                    </div>
+                    <div class="pt-4 border-t flex justify-between text-xl font-semibold">
+                        <span>Total</span>
+                        <span id="modal-total"></span>
+                    </div>
+                </div>
+
+                <button onclick="confirmBooking()" 
+                        class="w-full mt-10 bg-red-500 hover:bg-red-600 text-white py-4 rounded-2xl font-semibold text-lg">
+                    Reserve
+                </button>
+                
+                <button onclick="closeModal()" 
+                        class="w-full mt-3 py-3 text-gray-500 hover:text-gray-700">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

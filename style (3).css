@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.property-card {
+    transition: all 0.3s ease;
+}
+
+.property-card:hover {
+    transform: scale(1.03);
+}
+
+.property-card img {
+    transition: all 0.4s ease;
+}
+
+.property-card:hover img {
+    transform: scale(1.08);
+}
